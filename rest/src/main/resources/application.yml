@@ -1,0 +1,44 @@
+server:
+  servlet:
+    context-path: /api
+
+spring:
+  config:
+    import: optional:file:.env[.properties]
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+    properties:
+      hibernate:
+        jdbc:
+          batch_size: 50
+        order_inserts: true
+        order_updates: true
+  jackson:
+    default-property-inclusion: non_null
+
+  liquibase:
+    change-log: file:liquibase/db.changelog-master.yaml
+    enabled: false
+
+scraper:
+  base-url: ${TARGET_BASE_URL}
+  paths:
+    division-standings: ${TARGET_PATH_DIVISION_STANDINGS}
+    club-standings: ${TARGET_PATH_CLUB_STANDINGS}
+    club-rankings: ${TARGET_PATH_CLUB_RANKINGS}
+    division-rankings: ${TARGET_PATH_DIVISION_RANKINGS}
+  selectors:
+    table-rows: ${TARGET_SELECTOR_TABLE_ROWS}
+    bot-loan-flag: ${TARGET_SELECTOR_BOT_LOAN_FLAG}
+    team-not-active-img: ${TARGET_IMG_NOT_ACTIVE}
+    team-active-img: ${TARGET_IMG_ACTIVE}
+    team-vacation-img: ${TARGET_IMG_VACATION}
+    team-pending-validation-img: ${TARGET_IMG_PENDING_VALIDATION}

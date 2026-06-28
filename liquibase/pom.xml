@@ -1,0 +1,60 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.5.4</version>
+        <relativePath/>
+    </parent>
+
+    <groupId>me.julianmartinez.pcl</groupId>
+    <artifactId>liquibase</artifactId>
+
+    <properties>
+        <postgresql.version>42.7.6</postgresql.version>
+        <liquibase-core.version>5.0.1</liquibase-core.version>
+        <liquibase-hibernate6.version>5.0.1</liquibase-hibernate6.version>
+
+        <db.name>pcliga</db.name>
+        <db.schema>public</db.schema>
+        <db.username>pcl_julian</db.username>
+        <db.password>pcl_julian</db.password>
+        <db.host>localhost</db.host>
+        <db.port>5432</db.port>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+                <version>${liquibase-hibernate6.version}</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.postgresql</groupId>
+                        <artifactId>postgresql</artifactId>
+                        <version>${postgresql.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.liquibase.ext</groupId>
+                        <artifactId>liquibase-hibernate6</artifactId>
+                        <version>${liquibase-hibernate6.version}</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <driver>org.postgresql.Driver</driver>
+                    <url>jdbc:postgresql://${db.host}:${db.port}/${db.name}</url>
+                    <changeLogFile>db.changelog-master.yaml</changeLogFile>
+                    <defaultSchemaName>${db.schema}</defaultSchemaName>
+                    <changelogCatalogName>${db.schema}</changelogCatalogName>
+                    <username>${db.username}</username>
+                    <password>${db.password}</password>
+                    <logging>debug</logging>
+                    <verbose>true</verbose>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

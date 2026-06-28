@@ -1,0 +1,291 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1778521746636-1
+      author: julian (generated)
+      changes:
+        - createSequence:
+            incrementBy: 50
+            sequenceName: club_id_seq
+            startValue: 1
+  - changeSet:
+      id: 1778521746636-2
+      author: julian (generated)
+      changes:
+        - createSequence:
+            incrementBy: 50
+            sequenceName: country_id_seq
+            startValue: 1
+  - changeSet:
+      id: 1778521746636-3
+      author: julian (generated)
+      changes:
+        - createSequence:
+            incrementBy: 50
+            sequenceName: division_id_seq
+            startValue: 1
+  - changeSet:
+      id: 1778521746636-4
+      author: julian (generated)
+      changes:
+        - createSequence:
+            incrementBy: 50
+            sequenceName: match_id_seq
+            startValue: 1
+  - changeSet:
+      id: 1778521746636-5
+      author: julian (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: clubPK
+                  name: id
+                  type: BIGINT
+              - column:
+                  defaultValueBoolean: false
+                  name: bot_and_has_loaned_player
+                  type: BOOLEAN
+              - column:
+                  constraints:
+                    nullable: false
+                  name: control
+                  type: VARCHAR(30)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: name
+                  type: VARCHAR(40)
+              - column:
+                  name: squad_average
+                  type: numeric(38, 2)
+              - column:
+                  name: best_eleven_average
+                  type: numeric(38, 2)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: url_name
+                  type: VARCHAR(40)
+              - column:
+                  name: division_id
+                  type: BIGINT
+            tableName: club
+  - changeSet:
+      id: 1778521746636-6
+      author: julian (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: countryPK
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: name
+                  type: VARCHAR(30)
+            tableName: country
+  - changeSet:
+      id: 1778521746636-7
+      author: julian (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: divisionPK
+                  name: id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: internal_id
+                  type: VARCHAR(5)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: ordinal
+                  type: VARCHAR(1)
+              - column:
+                  name: squad_average
+                  type: numeric(38, 2)
+              - column:
+                  name: best_eleven_average
+                  type: numeric(38, 2)
+              - column:
+                  name: country_id
+                  type: BIGINT
+            tableName: division
+  - changeSet:
+      id: 1778521746636-8
+      author: julian (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: matchPK
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: date
+                  type: date
+              - column:
+                  name: match_day
+                  type: INTEGER
+              - column:
+                  name: away_club_id
+                  type: BIGINT
+              - column:
+                  name: home_club_id
+                  type: BIGINT
+            tableName: match
+  - changeSet:
+      id: 1778521746636-9
+      author: julian (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: standingPK
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: draw
+                  type: VARCHAR(2)
+              - column:
+                  name: goal_average
+                  type: VARCHAR(4)
+              - column:
+                  name: goals_conceded
+                  type: VARCHAR(3)
+              - column:
+                  name: goals_scored
+                  type: VARCHAR(3)
+              - column:
+                  name: lost
+                  type: VARCHAR(2)
+              - column:
+                  name: played
+                  type: VARCHAR(2)
+              - column:
+                  name: points
+                  type: INTEGER
+              - column:
+                  name: position
+                  type: INTEGER
+              - column:
+                  name: won
+                  type: VARCHAR(2)
+            tableName: standing
+  - changeSet:
+      id: 1778521746636-10
+      author: julian (generated)
+      changes:
+        - addUniqueConstraint:
+            columnNames: url_name
+            constraintName: club_url_name_uq
+            tableName: club
+  - changeSet:
+      id: 1778521746636-11
+      author: julian (generated)
+      changes:
+        - addUniqueConstraint:
+            columnNames: name
+            constraintName: country_name_uq
+            tableName: country
+  - changeSet:
+      id: 1778521746636-12
+      author: julian (generated)
+      changes:
+        - addUniqueConstraint:
+            columnNames: internal_id
+            constraintName: division_internal_id_uq
+            tableName: division
+  - changeSet:
+      id: 1778521746636-13
+      author: julian (generated)
+      changes:
+        - createIndex:
+            columns:
+              - column:
+                  name: ordinal
+            indexName: division_ordinal_idx
+            tableName: division
+  - changeSet:
+      id: 1778521746636-14
+      author: julian (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: id
+            baseTableName: standing
+            constraintName: FKjq1bxgnxbc7h1pskyfswfly9h
+            deferrable: false
+            initiallyDeferred: false
+            referencedColumnNames: id
+            referencedTableName: club
+            validate: true
+  - changeSet:
+      id: 1778521746636-15
+      author: julian (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: away_club_id
+            baseTableName: match
+            constraintName: away__match_fk
+            deferrable: false
+            initiallyDeferred: false
+            referencedColumnNames: id
+            referencedTableName: club
+            validate: true
+  - changeSet:
+      id: 1778521746636-16
+      author: julian (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: country_id
+            baseTableName: division
+            constraintName: country__division_fk
+            deferrable: false
+            initiallyDeferred: false
+            referencedColumnNames: id
+            referencedTableName: country
+            validate: true
+  - changeSet:
+      id: 1778521746636-17
+      author: julian (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: division_id
+            baseTableName: club
+            constraintName: division__club_fk
+            deferrable: false
+            initiallyDeferred: false
+            referencedColumnNames: id
+            referencedTableName: division
+            validate: true
+  - changeSet:
+      id: 1778521746636-18
+      author: julian (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: home_club_id
+            baseTableName: match
+            constraintName: home__match_fk
+            deferrable: false
+            initiallyDeferred: false
+            referencedColumnNames: id
+            referencedTableName: club
+            validate: true
