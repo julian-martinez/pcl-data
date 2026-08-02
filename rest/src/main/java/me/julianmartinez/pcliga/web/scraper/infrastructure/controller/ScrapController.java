@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.julianmartinez.pcliga.web.scraper.application.SaveClubService;
 import me.julianmartinez.pcliga.web.scraper.application.SaveDivisionService;
+import me.julianmartinez.pcliga.web.scraper.application.SeasonService;
 import me.julianmartinez.pcliga.web.scraper.domain.model.SeedResult;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,9 +18,11 @@ public class ScrapController {
 
     private final SaveDivisionService saveDivisionService;
     private final SaveClubService saveClubService;
+    private final SeasonService seasonService;
 
     @PostMapping(value = "/divisions")
     public ResponseEntity<SeedResult> seedDivisions() {
+        this.seasonService.refreshLastResetDate();
         final SeedResult result = this.saveDivisionService.saveCountriesAndDivisions().block();
         return ResponseEntity.ok(result);
     }

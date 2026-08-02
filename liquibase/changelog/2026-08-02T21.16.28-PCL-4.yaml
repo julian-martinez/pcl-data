@@ -1,0 +1,33 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1785575788000-1
+      author: julian
+      changes:
+        - createTable:
+            tableName: season_state
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: season_statePK
+                  name: id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: last_reset_date
+                  type: DATE
+  - changeSet:
+      id: 1785575788000-2
+      author: julian
+      changes:
+        - insert:
+            tableName: season_state
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: 1
+              - column:
+                  name: last_reset_date
+                  valueDate: 2026-06-14

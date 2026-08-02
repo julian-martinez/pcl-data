@@ -2,3 +2,5 @@
 databaseChangeLog:
   - include:
       file: changelog/2026-05-11T19.48.53-PCL-1.yaml
+  - include:
+      file: changelog/2026-08-02T21.16.28-PCL-4.yaml

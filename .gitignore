@@ -10,6 +10,7 @@ docker-compose.yaml
 CLAUDE.md
 .env
 .env.example
+*.local.md
 
 ### Java ###
 
