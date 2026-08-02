@@ -19,6 +19,8 @@ public class DivisionDto implements Comparable<DivisionDto> {
     String country;
     RealAverageDto realAverage;
     List<ClubDto> clubs;
+    Integer inactivePlayers;
+    Integer inactivePlayersWithLoanee;
 
     public static DivisionDto createFromDivision(final String internalId, final Integer ordinal, final String country) {
         return DivisionDto.builder()
@@ -33,19 +35,6 @@ public class DivisionDto implements Comparable<DivisionDto> {
             .internalId(internalId)
             .realAverage(RealAverageDto.createFromString(squadAverage, bestElevenAverage))
             .build();
-    }
-
-    public Integer getInactivePlayers(final String teamNotActiveImg) {
-        return Math.toIntExact(this.clubs.stream()
-            .filter(club -> teamNotActiveImg.equals(club.getControl()))
-            .count());
-    }
-
-    public Integer getInactivePlayersWithLoanee(final String teamNotActiveImg) {
-        return Math.toIntExact(this.clubs.stream()
-            .filter(club -> teamNotActiveImg.equals(club.getControl()))
-            .filter(ClubDto::isBotAndHasLoanedPlayer)
-            .count());
     }
 
     @Override
