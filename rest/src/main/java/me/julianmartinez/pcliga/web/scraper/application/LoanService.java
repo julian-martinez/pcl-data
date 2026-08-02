@@ -29,19 +29,21 @@ public class LoanService {
             .stream()
             .collect(Collectors.groupingBy(club -> club.getDivision().getInternalId()))
             .values().stream()
-            .map(clubs -> {
-                final List<ClubDto> clubDtos = clubs.stream()
-                    .map(this.clubMapper::toClubDto)
-                    .toList();
-
-                return this.divisionMapper.toDivisionDto(clubs.getFirst().getDivision()).toBuilder()
-                    .clubs(clubDtos)
-                    .inactivePlayers(this.countInactivePlayers(clubs, teamNotActiveImg))
-                    .inactivePlayersWithLoanee(this.countInactivePlayersWithLoanee(clubs, teamNotActiveImg))
-                    .build();
-            })
+            .map(clubs -> this.buildDivisionDto(clubs, teamNotActiveImg))
             .sorted()
             .toList();
+    }
+
+    private DivisionDto buildDivisionDto(final List<Club> clubs, final String teamNotActiveImg) {
+        final List<ClubDto> clubDtos = clubs.stream()
+            .map(this.clubMapper::toClubDto)
+            .toList();
+
+        return this.divisionMapper.toDivisionDto(clubs.getFirst().getDivision()).toBuilder()
+            .clubs(clubDtos)
+            .inactivePlayers(this.countInactivePlayers(clubs, teamNotActiveImg))
+            .inactivePlayersWithLoanee(this.countInactivePlayersWithLoanee(clubs, teamNotActiveImg))
+            .build();
     }
 
     private Integer countInactivePlayers(final List<Club> clubs, final String teamNotActiveImg) {
