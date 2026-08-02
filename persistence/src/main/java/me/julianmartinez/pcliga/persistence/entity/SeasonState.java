@@ -14,11 +14,6 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-/**
- * Single-row table holding the league's rolling season state. The row is
- * seeded by Liquibase with a historical reset date and kept up to date by
- * {@code SeasonService#refreshLastResetDate()}.
- */
 @Entity
 @Table(name = "season_state")
 @NoArgsConstructor(access = AccessLevel.PUBLIC)

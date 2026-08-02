@@ -70,27 +70,21 @@ class SeasonServiceTest {
 
     @ParameterizedTest(name = "day {0} after reset ({1}) -> matchday {2}")
     @CsvSource({
-        // Week 1: Mon..Fri -> matchdays 1..5, Sat/Sun carry 5
         "1, MONDAY, 1",
         "2, TUESDAY, 2",
         "5, FRIDAY, 5",
         "6, SATURDAY, 5",
         "7, SUNDAY, 5",
-        // Week 2 starts right after
         "8, MONDAY, 6",
         "12, FRIDAY, 10",
-        // Week 7: matchdays 31..35
         "43, MONDAY, 31",
         "47, FRIDAY, 35",
-        // Sunday between week 7 and week 8 carries week 7's last matchday
         "49, SUNDAY, 35",
-        // Week 8: only Mon-Wed play, matchdays 36..38
         "50, MONDAY, 36",
         "51, TUESDAY, 37",
         "52, WEDNESDAY, 38",
         "53, THURSDAY, 38",
         "55, SATURDAY, 38",
-        // The reset day itself (day 0/56) still shows the season's last matchday
         "0, SUNDAY, 38",
         "56, SUNDAY, 38",
     })
@@ -116,7 +110,6 @@ class SeasonServiceTest {
 
     @Test
     void refreshLastResetDate_advancesToLatestCompletedCycle() {
-        // 2 full 56-day cycles plus a few days past the seed
         final LocalDate today = SEED.plusDays(56 * 2 + 5);
         final SeasonService seasonService = this.clockedService(today);
 
@@ -141,8 +134,6 @@ class SeasonServiceTest {
 
     @Test
     void refreshLastResetDate_neverMovesDateBackwards() {
-        // Simulate a stored date further ahead than what "today" would compute
-        // (e.g. clock skew) - the stored value must win.
         this.state.setLastResetDate(SEED.plusDays(112));
         final LocalDate today = SEED.plusDays(60);
         final SeasonService seasonService = this.clockedService(today);

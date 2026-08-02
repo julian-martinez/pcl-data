@@ -21,9 +21,6 @@ databaseChangeLog:
   - changeSet:
       id: 1785575788000-2
       author: julian
-      comment: >-
-        Seeds the single season_state row with a real past reset date (a Sunday),
-        derived by subtracting 56 days from the next confirmed reset (2026-08-09).
       changes:
         - insert:
             tableName: season_state
